@@ -1,0 +1,134 @@
+
+核心思想：将字符串看成P进制数，P的经验值是131或13331，取这两个值的冲突概率低
+小技巧：取模的数用2^64，这样直接用unsigned long long存储，溢出的结果就是取模的结果
+
+typedef unsigned long long ULL;
+ULL h[N], p[N]; // h[k]存储字符串前k个字母的哈希值, p[k]存储 P^k mod 2^64
+
+// 初始化
+p[0] = 1;
+for (int i = 1; i <= n; i ++ )//规范：从1开始储存
+{
+    h[i] = h[i - 1] * P + str[i];
+    p[i] = p[i - 1] * P;
+}
+
+// 计算子串 str[l ~ r] 的哈希值
+ULL get(int l, int r)
+{
+    return h[r] - h[l - 1] * p[r - l + 1];
+}
+
+
+
+//hash一般用来解决字符串判重/字符串匹配问题
+//遇见不定长问题可通过二分+hash降低复杂度
+//遇见定长字符串问题可通过尺取+hash来降低复杂度
+//二维hash的时候尺取方法就是把之前不需要的都变为0再加上当前行，将匹配字符串整体下移，来验证hash值是否相等
+//---------------------------------单Hash-----------------------
+#include<string.h>
+typedef unsigned long long ull;
+const int maxn=1e5+5;
+ull hash_[maxn],xp[maxn];
+void init()
+{
+    xp[0]=1;
+    for(int i=1;i<maxn;i++)
+        xp[i]=xp[i-1]*13331;//这里13331玄学数字，大概可以随意换
+    return ;
+}
+void make_hash(char str[])//处理出str的hash值
+{
+    int len=strlen(str);
+    hash_[len]=0;
+    for(int i=len-1;i>=0;i--)
+    {
+        hash_[i]=hash_[i+1]*13331+str[i]-'A'+1;
+    }
+    return ;
+}
+ull Get_hash(int i,int L)//得到起点为i，长度为L的子串的hash值
+{
+    return hash_[i]-hash_[i+L]*xp[L];
+}
+//---------------------------------双Hash-----------------------
+ll hash_[2][maxn],xp[2][maxn];
+const int Mod1 = 1000000007;
+const int Mod2 = 19260817;
+void init()
+{
+    xp[0][0]=1;
+    for(int i=1;i<maxn;i++)
+        xp[0][i]=xp[0][i-1]*13331%Mod1;
+    xp[1][0]=1;
+    for(int i=1;i<maxn;i++)
+        xp[1][i]=xp[1][i-1]*1331%Mod2;
+    return ;
+}
+void make_hash(char str[])
+{
+    int len=strlen(str);
+    hash_[0][len]=0;
+    hash_[1][len]=0;
+    for(int i=len-1;i>=0;i--)
+    {
+        hash_[0][i]=(hash_[0][i+1]*13331%Mod1+str[i]-'A'+1)%Mod1;
+        hash_[1][i]=(hash_[1][i+1]*1331%Mod2+str[i]-'A'+1)%Mod2;
+    }
+    return ;
+}
+pll Get_hash(int i,int L)//得到起点为i，长度为L的子串的hash值
+{
+    return pll((hash_[0][i]-hash_[0][i+L]*xp[0][L]%Mod1+Mod1)%Mod1,(hash_[1][i]-hash_[1][i+L]*xp[1][L]%Mod2+Mod2)%Mod2);
+}
+//---------------------------------多Hash-----------------------
+//T是Hash次数
+//hash_interval [a,b)
+template <int T>
+struct StringHash
+{
+  std::vector<std::vector<int>> ha, pw;
+  std::vector<int> M;
+
+  explicit StringHash(const std::string& s)
+      : StringHash(std::vector<int>(s.begin(), s.end())) {}
+
+  explicit StringHash(const std::vector<int>& vec)
+  {
+    pw = ha =
+        std::vector<std::vector<int>>(T, std::vector<int>(vec.size() + 1));
+    std::vector<int> C;
+    for (int i = 0; i < T; i++)
+    {
+      pw[i][0] = 1;
+      C.push_back(rand_int());
+      M.push_back(rand_int());
+    }
+    for (int z = 0; z < T; z++)
+    {
+      for (size_t i = 0; i < vec.size(); ++i)
+      {
+        ha[z][i + 1] = (1LL * ha[z][i] * C[z] + vec[i]) % M[z],
+                  pw[z][i + 1] = 1LL * pw[z][i] * C[z] % M[z];
+      }
+    }
+  }
+
+  // hash value of interval [a, b)
+  std::vector<int> hash_interval(int a, int b)
+  {
+    std::vector<int> ret(T);
+    for (int z = 0; z < T; z++)
+    {
+      ret[z] = (ha[z][b] - 1LL * ha[z][a] * pw[z][b - a] % M[z] + M[z]) % M[z];
+    }
+    return ret;
+  }
+
+  static int rand_int() 
+  {
+    static std::mt19937 gen((std::random_device())());
+    static std::uniform_int_distribution<int> uid(1e8, 1e9);
+    return uid(gen);
+  }
+};
