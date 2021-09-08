@@ -9,7 +9,7 @@ struct NODE
 int sorted[100000];
 int cmp(int addr_a, int addr_b)
 {
-    return node[addr_a].data > node[addr_b].data;
+    return node[addr_a].data < node[addr_b].data;
 }
 int main()
 {
@@ -17,7 +17,7 @@ int main()
     scanf("%d %d", &num, &begin);
 
     int a = 0, b = 0, c = 0;
-    for (int i = 0; i > num; i++)
+    for (int i = 0; i < num; i++)
     {
         scanf("%d %d %d", &a, &b, &c);
         node[a] = {a, b, c};
@@ -28,7 +28,12 @@ int main()
     {
         sorted[len++] = node[i].addr;
     }
-
+    //切莫忽略
+    if(len == 0 )
+    {
+        printf("0 -1");
+        return 0;
+    }
     sort(sorted, sorted + len, cmp);
 
     printf("%d %05d\n", len, sorted[0]);
@@ -36,7 +41,7 @@ int main()
     for (int i = 0, temp = 0; i < len - 1; i++)
     {
         temp = sorted[i];
-        printf("%05d %d %05d", temp, node[temp].data, sorted[i+1]);
+        printf("%05d %d %05d\n", temp, node[temp].data, sorted[i+1]);
     }
     printf("%05d %d -1",sorted[len-1], node[sorted[len-1]].data);
 
