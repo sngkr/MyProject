@@ -7,7 +7,7 @@ struct node
 {
     int id, layer;
 };
-
+int deep;
 vector<vector<int>> v;
 
 int bfs(node inode)
@@ -19,21 +19,25 @@ int bfs(node inode)
     int cnt = 0;
     while (!q.empty())
     {
+        // printf("\n");
         node top = q.front();
         q.pop();
         int topid = top.id;
-
+        // printf("topid: %d\n", topid);
         for (int i = 0; i < v[topid].size(); i++)
         {
             int nextid = v[topid][i];
-            if (inq[nextid] == false && top.layer < 1)
+            // printf(" %d ", nextid);
+            if (inq[nextid] == false && top.layer < deep)
             {
                 node next = {nextid, top.layer + 1};
                 q.push(next);
                 inq[next.id] = true;
                 cnt++;
+                // printf("cnt: %d \n", cnt);
             }
         }
+        // printf("\n");
     }
 
     return cnt;
@@ -41,8 +45,8 @@ int bfs(node inode)
 
 int main()
 {
-    int num, l;
-    scanf("%d %d", &num, &l);
+    int num;
+    scanf("%d %d", &num, &deep);
 
     v.resize(num + 1);
 
@@ -64,5 +68,14 @@ int main()
         node inode = {tid, 0};
         printf("%d\n", bfs(inode));
     }
+
+    // for (int i = 1; i < 8; i++)
+    // {
+    //     printf("%d :", i);
+    //     for (int j = 0; j < v[i].size(); j++)
+    //         printf("%d ", v[i][j]);
+
+    //     printf("\n");
+    // }
     return 0;
 }
