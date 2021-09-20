@@ -1,13 +1,17 @@
-#include<iostream>
+#include <cstdio>
+#include <iostream>
 using namespace std;
-
-template <typename T, typename... Types>
-void print(const T& firstArg, const Types&... args)
-{
-
-}
-
 int main()
 {
- 
+    while (1)
+    {
+
+        int n;
+        int i = 0, j;
+        i = ~scanf("%d", &n);
+        cout << i << endl;
+        j = ~scanf("%d", &n);
+        cout << j << endl;
+    }
+    return 0;
 }
