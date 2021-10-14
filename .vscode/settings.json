@@ -40,7 +40,9 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "typeinfo": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "bitset": "cpp",
+    "functional": "cpp"
   },
   "python.pythonPath": "D:\\Python3.9.5\\python.exe",
   "C_Cpp_Runner.cCompilerPath": "D:\\Program Files (x86)\\mingw64\\bin\\gcc.exe",

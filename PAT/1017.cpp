@@ -40,6 +40,6 @@ int main()
             q.pop();
         }
     }
-    (!cnt) ? printf("0.0\n") : printf("%.1lf", ((double)total / 60.0) / (double)cnt); /* 离谱 */
+    (!cnt) ? printf("0.0\n") : printf("%.1lf", ((double)total / 60.0) / (double)cnt);/* 离谱 */
     return 0;
 }
