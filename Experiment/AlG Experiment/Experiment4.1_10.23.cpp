@@ -1,4 +1,64 @@
+#include <iostream>
+#include <vector>
+using namespace std;
 
+int main() {
+  int N;
+  cin >> N;
+  for (int i = 0, num; i < N; i++) {
+    cin >> num;
+    vector<int> result;
+    vector<int> temp;
+    for (int j = 0, element; j < num; j++) {
+      cin >> element;
+      /*特殊处理第一个元素 ，或者初始化的时候放入一个
+      很大的元素。
+      */
+      if (j == 0) {
+        result.push_back(element);
+        // temp = result;
+        temp.push_back(element);
+        continue;
+      }
+      /* 元素大于result的最后一个元素的话，放在result后面
+      原则：result一旦更新，temp也要更新，
+      优化：这种情况不一定要全部拷贝过去，与result一样
+      push_back即可
+       */
+      if (element > result.back()) {
+        result.push_back(element);
+        // temp = result;
+        temp.push_back(element);
+      }
+      /*需要将元素放进求得序列中时，只能操作temp向量！！;
+      优化：有序序列采用二分更快，但是懒。
+       */
+      if (element < temp.back()) {
+        for (auto &it : temp) {
+          if (it > element) {
+            it = element;
+            break;
+          }
+        }
+      }
+      /*
+      原理：
+      当temp的最后一个元素也被更改，说明该此时temp中的
+      递增序列比result向量中的更有潜力。
+      注意：
+      因为不知道temp中哪些元素被更改过了，所以不能像前
+      面那样优化拷贝，只能将temp全部拷贝到result中。
+       */
+      if (temp.back() != result.back()) result = temp;
+    }
+    cout << "\n" << result.size() << endl;
+    for (auto it : result) {
+      cout << it << " ";
+    }
+    cout << "\n\n";
+  }
+  return 0;
+}
 //保留
 // #include <iostream>
 // #include <vector>
@@ -95,7 +155,8 @@
 //         // if (len + 1 > lenMax)
 //         //   lenMax = len + 1;
 //       }
-//       //   if (LIS[j][len - 1] > element && LIS[j][len - 2] < element && len
+//       //   if (LIS[j][len - 1] > element && LIS[j][len - 2] < element &&
+//       len
 //       >
 //       //   1) {
 //       //     LIS[j][len - 1] = element;
