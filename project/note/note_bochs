@@ -1,0 +1,44 @@
+（1）b addr 在物理地址处设置断点
+（2）lb 在线性地址处设置断点
+（3）info break 显示当前所有的断点的信
+（4）c 继续执行知道遇到断点
+（5）n 单步执行，跳过子程序
+（6）s 单步执行
+（7）s num ( s指令后加一数字) 执行n步
+（8）dump_cpu 查看寄存器信息
+（9）xp /nuf addr 显示物理内存的数据
+(例:xp /32bx 0x7c00 ----显示0x7c00 开始处的内存内容
+
+32bx --b 代表显示字节 x 表示以16进制显示)
+（10）x /nuf addr 显示线性内存地址的数据
+（11）disassemble [/count] start end 反汇编一段线性内存
+
+u [/count] start end 反汇编一段线性内存(作用与上面的一样)
+
+(count 参数指明要反汇编的指令条数 ,例子：u /5 --反汇编从当前地址开始的5条指令)
+（12）vbreak segment:offset 在指定的虚拟地址处设置断点（段地址：偏移）
+（13）info指令组
+
+info break 展示当前的断点状态信息
+
+info dirty 展示自从上次显示以来物理内存中的脏页（被写的页）
+
+info program 展示程序的执行状态
+
+info r|reg|rigisters 展示寄存器内容
+
+info cpu 展示CPU寄存器内容
+
+info fpu 展示FPU寄存器的状态
+
+info idt 展示中断描述表
+
+info ivt 展示中断向量表(保护模式下无效)
+
+info gdt 展示全局描述表
+
+info tss 展示当前的任务状态段
+
+info cr 展示CR0-CR4寄存器状态
+
+info flags 展示标志寄存器
