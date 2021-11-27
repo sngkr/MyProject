@@ -45,6 +45,7 @@
     "functional": "cpp",
     "iterator": "cpp"
   },
+  
   "python.pythonPath": "D:\\Python3.9.5\\python.exe",
   "C_Cpp_Runner.cCompilerPath": "D:\\Program Files (x86)\\mingw64\\bin\\gcc.exe",
   "C_Cpp_Runner.cppCompilerPath": "D:\\Program Files (x86)\\mingw64\\bin\\g++.exe",
@@ -63,4 +64,17 @@
   "C_Cpp_Runner.excludeSearch": [],
   "C_Cpp_Runner.enableWarnings": true,
   "C_Cpp_Runner.warningsAsError": false
+
 }
+"terminal.integrated.profiles.windows": {
+  "PowerShell": {
+    "source": "PowerShell",
+    "overrideName": true,
+    "args": ["-NoExit", "/c", "chcp 65001"],
+    "icon": "terminal-powershell",
+    "env": {
+      "TEST_VAR": "value"
+    }
+  }
+},
+"terminal.integrated.defaultProfile.windows": "PowerShell",

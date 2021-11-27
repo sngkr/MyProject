@@ -7,8 +7,18 @@ using namespace std;
 int main() {
   int a = 4;
   int b = 8 & P;
+  int i = 0;
+  char str[255];
   // cout << C << endl;
   cout << b << endl;
+  cout <<"sizeof str：" <<sizeof(str) << endl;
+  while (i < 9) {
+    int j = i;
+    j = i < sizeof(str) - 1;
+    cout << j << endl;
+    i++;
+  }
+
   return 0;
 }
 
